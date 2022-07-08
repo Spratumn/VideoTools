@@ -23,12 +23,14 @@ class PyTools(QMainWindow, Ui_MainWindow):
         self.pButSequenceImageDir.clicked.connect(self.select_sequence_image_dir)
         self.pButAnnotationPath.clicked.connect(self.select_sequence_annotation_path)
         self.pButVideoPath.clicked.connect(self.select_video_path)
+        self.pButRenameFolderDir.clicked.connect(self.select_rename_folder_dir)
 
         self.comboBoxAnnotation.currentIndexChanged.connect(self.annotation_option_edit)
 
         self.pButSeq2Video.clicked.connect(self.sequence_to_video)
         self.pButViewTracks.clicked.connect(self.view_sequence_tracks)
         self.pButVideo2Sequence.clicked.connect(self.video_to_sequence)
+        self.pButRenameFolder.clicked.connect(self.rename_folder)
         
 
     def sequence_to_video(self):
@@ -143,6 +145,38 @@ class PyTools(QMainWindow, Ui_MainWindow):
             QMessageBox.warning(self, "Warning", "Extract frames failed, check configs!", QMessageBox.Ok)
 
 
+    def rename_folder(self):
+        if not self.check_op(message='Are you sure to rename the selected video?'):return
+        
+        folderDir = self.lineEditRenameFolderDir.text()
+        if not os.path.exists(folderDir):
+            QMessageBox.warning(self, "Warning", "folder not exist!", QMessageBox.Ok)
+            return
+        originIndexSort = self.checkBoxOriginIndexSort.isChecked()
+        commonCfg = self.get_common_configs()
+        
+        self.renameFolderThread = RenameFolderThread(folderDir=folderDir,
+                                                    originIndexSort=originIndexSort,
+                                                    commonCfg=commonCfg)
+        self.renameFolderThread.start()
+        self.renameFolderThread.trigger.connect(self.rename_folder_log)
+        self.pButRenameFolder.setEnabled(False)
+        self.pButRenameFolder.setText('Renaming')
+        self.pButRenameFolderDir.setEnabled(False)
+        self.lineEditRenameFolderDir.setEnabled(False)
+
+
+    def rename_folder_log(self, strMessage):
+        ret, message = strMessage.split(',')
+        if message=='finish':
+            self.pButRenameFolder.setEnabled(True)
+            self.pButRenameFolder.setText('Rename')
+            self.pButRenameFolderDir.setEnabled(True)
+            self.lineEditRenameFolderDir.setEnabled(True)
+        if ret!='0':
+            QMessageBox.warning(self, "Warning", "Rename folder failed, check configs!", QMessageBox.Ok)
+
+
     def select_sequence_image_dir(self):
         imageDir = QFileDialog.getExistingDirectory(self, 'Select Sequence Image Dir')
         if os.path.exists(imageDir):
@@ -158,9 +192,14 @@ class PyTools(QMainWindow, Ui_MainWindow):
             self.lineEditAnnotationPath.setText(annotationPath)
 
     def select_video_path(self):
-        videoPath, _ = QFileDialog.getOpenFileName(self, 'Select Video Path', './', 'video file (*.mp4, *.avi)')
+        videoPath, _ = QFileDialog.getOpenFileName(self, 'Select Video Path', './', "video file (*.mp4 *.avi)")
         if os.path.exists(videoPath):
             self.lineEditVideoPath.setText(videoPath)
+
+    def select_rename_folder_dir(self):
+        folderDir = QFileDialog.getExistingDirectory(self, 'Select Rename folder Dir')
+        if os.path.exists(folderDir):
+            self.lineEditRenameFolderDir.setText(folderDir)
 
     def annotation_option_edit(self):
         annotationType = self.comboBoxAnnotation.currentText()

@@ -1,6 +1,7 @@
 from PySide2.QtCore import QThread, Signal
 from .video_tools import sequence2video, video2sequence, tracking2vides, detections2vides, CommonCfg
 from .track_tools import view_tracks
+from .utils import rename_folder
 
 class Sequence2VideoThread(QThread):
     trigger = Signal(str)
@@ -55,5 +56,20 @@ class ViewTracksThread(QThread):
         endIdx = self.commonCfg.endIdx
         lineThickness = self.commonCfg.lineWidth
         ret = view_tracks(self.sequenceDir, self.txtPath, prefix, suffix, zfill, startIdx, endIdx, lineThickness)
+        self.trigger.emit(f'{ret},finish')
+
+
+class RenameFolderThread(QThread):
+    trigger = Signal(str)
+    """
+    """
+    def __init__(self, folderDir, originIndexSort, commonCfg):
+        super(RenameFolderThread, self).__init__()
+        self.folderDir = folderDir
+        self.originIndexSort = originIndexSort
+        self.commonCfg = commonCfg
+
+    def run(self):
+        ret = rename_folder(self.folderDir, self.originIndexSort, self.commonCfg)
         self.trigger.emit(f'{ret},finish')
 

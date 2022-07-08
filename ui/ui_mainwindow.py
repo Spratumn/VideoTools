@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainwindowWdKHcG.ui'
+## Form generated from reading UI file 'mainwindowRTIbzA.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -60,6 +60,7 @@ class Ui_MainWindow(object):
         self.comboBoxSuffix.addItem("")
         self.comboBoxSuffix.setObjectName(u"comboBoxSuffix")
         self.comboBoxSuffix.setGeometry(QRect(90, 80, 111, 22))
+        self.comboBoxSuffix.setEditable(True)
         self.label_51 = QLabel(self.videoTools)
         self.label_51.setObjectName(u"label_51")
         self.label_51.setGeometry(QRect(20, 70, 51, 41))
@@ -176,6 +177,29 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.videoTools, "")
         self.sequenceTools = QWidget()
         self.sequenceTools.setObjectName(u"sequenceTools")
+        self.label_58 = QLabel(self.sequenceTools)
+        self.label_58.setObjectName(u"label_58")
+        self.label_58.setGeometry(QRect(140, 10, 111, 31))
+        self.pButRenameFolder = QPushButton(self.sequenceTools)
+        self.pButRenameFolder.setObjectName(u"pButRenameFolder")
+        self.pButRenameFolder.setGeometry(QRect(110, 130, 131, 31))
+        self.label_45 = QLabel(self.sequenceTools)
+        self.label_45.setObjectName(u"label_45")
+        self.label_45.setGeometry(QRect(10, 50, 81, 41))
+        self.pButRenameFolderDir = QPushButton(self.sequenceTools)
+        self.pButRenameFolderDir.setObjectName(u"pButRenameFolderDir")
+        self.pButRenameFolderDir.setGeometry(QRect(360, 60, 31, 21))
+        self.lineEditRenameFolderDir = QLineEdit(self.sequenceTools)
+        self.lineEditRenameFolderDir.setObjectName(u"lineEditRenameFolderDir")
+        self.lineEditRenameFolderDir.setGeometry(QRect(80, 60, 271, 20))
+        self.line_22 = QFrame(self.sequenceTools)
+        self.line_22.setObjectName(u"line_22")
+        self.line_22.setGeometry(QRect(10, 30, 381, 20))
+        self.line_22.setFrameShape(QFrame.HLine)
+        self.line_22.setFrameShadow(QFrame.Sunken)
+        self.checkBoxOriginIndexSort = QCheckBox(self.sequenceTools)
+        self.checkBoxOriginIndexSort.setObjectName(u"checkBoxOriginIndexSort")
+        self.checkBoxOriginIndexSort.setGeometry(QRect(10, 100, 131, 16))
         self.tabWidget.addTab(self.sequenceTools, "")
 
         self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
@@ -227,6 +251,11 @@ class Ui_MainWindow(object):
         self.pButViewTracks.setText(QCoreApplication.translate("MainWindow", u"View Tracks", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"LineWidth:", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.videoTools), QCoreApplication.translate("MainWindow", u"VideoTools", None))
+        self.label_58.setText(QCoreApplication.translate("MainWindow", u"Batch Rename", None))
+        self.pButRenameFolder.setText(QCoreApplication.translate("MainWindow", u"Rename", None))
+        self.label_45.setText(QCoreApplication.translate("MainWindow", u"Folder Dir:", None))
+        self.pButRenameFolderDir.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.checkBoxOriginIndexSort.setText(QCoreApplication.translate("MainWindow", u"Origin Index Sort", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sequenceTools), QCoreApplication.translate("MainWindow", u"Other", None))
     # retranslateUi
 
