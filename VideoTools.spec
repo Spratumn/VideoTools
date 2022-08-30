@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['PyTools.py'],
+a = Analysis(['VideoTools.py'],
              pathex=[],
              binaries=[],
              datas=[],
@@ -24,7 +24,7 @@ exe = EXE(pyz,
           a.scripts, 
           [],
           exclude_binaries=True,
-          name='PyTools',
+          name='VideoTools',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -41,4 +41,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='PyTools')
+               name='VideoTools')
