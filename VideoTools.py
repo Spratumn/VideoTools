@@ -2,7 +2,7 @@ from ui.ui_mainwindow import Ui_MainWindow
 
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 
 from thread import *
 
@@ -31,11 +31,11 @@ class PyTools(QMainWindow, Ui_MainWindow):
         self.pButViewTracks.clicked.connect(self.view_sequence_tracks)
         self.pButVideo2Sequence.clicked.connect(self.video_to_sequence)
         self.pButRenameFolder.clicked.connect(self.rename_folder)
-        
+
 
     def sequence_to_video(self):
         if not self.check_op(message='Are you sure to make video form the selected sequence?'):return
-        
+
         annotationType = self.comboBoxAnnotation.currentText()
         xmlDir = None
         txtPath = None
@@ -54,7 +54,7 @@ class PyTools(QMainWindow, Ui_MainWindow):
         if not os.path.exists(sequenceDir) or len(os.listdir(sequenceDir)) == 0:
             QMessageBox.warning(self, "Warning", "sequence not exist or empty!", QMessageBox.Ok)
             return
-        
+
         commonCfg = self.get_common_configs()
         self.seq2videoThread = Sequence2VideoThread(sequenceDir=sequenceDir,
                                                     commonCfg=commonCfg,
@@ -82,10 +82,10 @@ class PyTools(QMainWindow, Ui_MainWindow):
             self.lineEditSequenceImageDir.setEnabled(True)
         if ret!='0':
             QMessageBox.warning(self, "Warning", "Make video failed, check configs!", QMessageBox.Ok)
-    
+
     def view_sequence_tracks(self):
         if not self.check_op(message='Are you sure to view the tracks of the selected sequence?'):return
-        
+
         sequenceDir = self.lineEditSequenceImageDir.text()
         if not os.path.exists(sequenceDir) or len(os.listdir(sequenceDir)) == 0:
             QMessageBox.warning(self, "Warning", "sequence not exist or empty!", QMessageBox.Ok)
@@ -94,9 +94,9 @@ class PyTools(QMainWindow, Ui_MainWindow):
         if not os.path.exists(txtPath):
             QMessageBox.warning(self, "Warning", "txt path not exist!", QMessageBox.Ok)
             return
-        
+
         commonConfig = self.get_common_configs()
-        
+
         self.viewTracksThread = ViewTracksThread(sequenceDir=sequenceDir,
                                                 commonCfg=commonConfig,
                                                 txtPath=txtPath)
@@ -112,18 +112,18 @@ class PyTools(QMainWindow, Ui_MainWindow):
             self.pButViewTracks.setText('View Tracks')
         if ret!='0':
             QMessageBox.warning(self, "Warning", "View tracks failed, check configs!", QMessageBox.Ok)
-            
+
 
     def video_to_sequence(self):
         if not self.check_op(message='Are you sure to extract frames form the selected video?'):return
-        
+
         videoPath = self.lineEditVideoPath.text()
         if not os.path.exists(videoPath):
             QMessageBox.warning(self, "Warning", "video not exist!", QMessageBox.Ok)
             return
-        
+
         commonCfg = self.get_common_configs()
-        
+
         self.video2seqThread = Video2SequenceThread(videoPath=videoPath,
                                                     commonCfg=commonCfg)
         self.video2seqThread.start()
@@ -147,14 +147,14 @@ class PyTools(QMainWindow, Ui_MainWindow):
 
     def rename_folder(self):
         if not self.check_op(message='Are you sure to rename the selected video?'):return
-        
+
         folderDir = self.lineEditRenameFolderDir.text()
         if not os.path.exists(folderDir):
             QMessageBox.warning(self, "Warning", "folder not exist!", QMessageBox.Ok)
             return
         originIndexSort = self.checkBoxOriginIndexSort.isChecked()
         commonCfg = self.get_common_configs()
-        
+
         self.renameFolderThread = RenameFolderThread(folderDir=folderDir,
                                                     originIndexSort=originIndexSort,
                                                     commonCfg=commonCfg)
@@ -240,4 +240,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     w = PyTools()
     w.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

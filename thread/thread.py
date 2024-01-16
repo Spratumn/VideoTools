@@ -1,4 +1,4 @@
-from PySide2.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal
 from .video_tools import sequence2video, video2sequence, tracking2vides, detections2vides, CommonCfg
 from .track_tools import view_tracks
 from .utils import rename_folder
@@ -36,7 +36,7 @@ class Video2SequenceThread(QThread):
     def run(self):
         ret = video2sequence(self.videoPath, cfg=self.commonCfg)
         self.trigger.emit(f'{ret},finish')
-        
+
 
 class ViewTracksThread(QThread):
     trigger = Signal(str)
